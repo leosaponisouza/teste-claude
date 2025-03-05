@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui" lang="pt-BR">
+      
+<f:metadata>
+	<f:event type="postAddToView" listener="#{usuario.access(2)}"/>
+</f:metadata>
+      
+      
+  <h:head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0" />
+    <title>main</title>
+    <meta name="description" content="Página para mostrar Amostras" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/muli" type="text/css" />
+    <link rel="shortcut icon" href="/exoma/resources/images/favicon.ico" />
+ </h:head>
+  <body class="bg-light">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <header class="p-2 text-white border-identity mb-0" style="border-right: none;border-left: none;border-top: none; background-color: #2C2C2C; font-size:1.15rem;">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="https://www.facom.ufu.br/~santosardr/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <img class="me-2" src="/exoma/resources/images/logo_c2b2.png" width="70" height="70" />
+          </a>
+          <h:outputLabel id="welcome" value="Bem-vindo #{usuario.getNome()}!" />
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-3 d-flex gap-3">
+            <a href="../participante/index.xhtml" class="nav-link px-2 navbar-item-active">Participante</a>
+            <a href="../amostra/index.xhtml" class="nav-link px-2 navbar-item">Amostra</a>
+			<a href="../acompanhamento_amostra/index.xhtml" class="nav-link px-2 navbar-item">Acompanhar Amostra</a>
+            <a href="../diagnostico/index.xhtml" class="nav-link px-2 navbar-item">Diagnóstico</a>            
+			<a href="../e_amostra/index.xhtml" class="nav-link px-2 navbar-item">E_Amostra</a>    
+	        <a href="../e_diagnostico/index.xhtml" class="nav-link px-2 navbar-item">E_Diagnóstico</a>
+			<a href="../exame/index.xhtml" class="nav-link px-2 navbar-item">Exame</a>
+   			<a href="../projeto/index.xhtml" class="nav-link px-2 navbar-item">Projeto</a>
+            <a href="../e_amostra/index2.xhtml" class="nav-link px-2 navbar-item">Report</a>
+            <a href="../usuario/index.xhtml" class="nav-link px-2 navbar-item">Usuário</a>
+          </ul>
+          <div class="mx-3">
+			<p:commandLink id="view" actionListener= "#{usuario.Logout()}" >
+			 <svg width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewbox="0 0 16 16"> 
+			  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"> </path> 
+			  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"> </path> 
+			</svg> Logout
+			</p:commandLink>          	
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="bg-light py-5">
+      <div class="container">
+        <div class="row gap-3">
+          <table width="90%">
+            <tr>
+	         <h:form id="selectRecord" display= "grid">
+			  <h:outputLabel id="selectRecordmessage" />
+			  <h:message for="selectRecordmessage" styleClass="successText" />
+              <td width="30%">			      
+		        <h:panelGrid columns="1">
+			        <h:panelGrid columns="2" >
+					   <h:commandLink type="button" id="create" action="create.xhtml" actionListener="#{amostra.reset()}" 
+					  					styleClass="btn btn-primary btn-sm btnPos" style="min-width: 9em;" >
+								     <h:outputText value="Add"></h:outputText> </h:commandLink>              
+					   <h:commandLink type="button" id="recover" action="recover.xhtml" actionListener="#{amostra.searchAnAmostraSet()}" 
+					  					styleClass="btn btn-primary btn-sm btnPos" style="min-width: 9em;">
+								     <h:outputText value="Report"></h:outputText> </h:commandLink>
+		            </h:panelGrid>
+		            <h3 style="line-height: 2em;">Buscar Amostra:</h3>
+ 					<h:panelGrid columns="5" style="line-height: 3em;" >								               
+			          <div class="form-group">
+			            <h:outputLabel value="Selecione Amostra:" styleClass="control-label" style="min-width: 7em;"/>
+			            <div class="col-xs-10">	
+					      <h:selectOneMenu id="selectAmostra" value="#{amostra.idamo}" styleClass="btn btn-primary btn-sm btnPos" style="min-width: 8em;">
+					      	<f:selectItem itemValue="" itemLabel="---" />
+							<f:selectItems value="#{amostra.getAllAmostraAsList()}" var="all" itemValue="#{all.idamo}" itemLabel="#{all.idamo}"/>
+							<f:ajax listener="#{amostra.searchOneAmostrabyId(amostra.idamo)}" render=" :selectRecord:idamo" />
+					      </h:selectOneMenu>
+			            </div>
+			          </div>
+			          </h:panelGrid>
+			          
+			          <h:panelGrid columns="4" style="line-height: 4em;">
+			          <div class="form-group">
+			            <h:outputLabel value="Digite Amostra:" styleClass="control-label" style="min-width: 7em;"/>
+			            <div class="col-xs-10">	
+			              <h:inputText id="idamo" value="#{amostra.idamo}" styleClass="form-control" style="max-width: 8em;"/>
+			            </div>
+			          </div>
+			          </h:panelGrid>
+			          
+			          <div class="form-group" style="line-height: 4em;" >
+			            <div class="col-xs-offset-2 col-xs-10">
+						   <p:commandLink id="recover2" oncomplete="window.open('view.xhtml', '_self')" 
+						   	actionListener="#{amostra.searchOneAmostra}"
+						   	styleClass="btn btn-primary btn-sm btnPos" style="min-width: 18em;">
+						   <h:outputText value="Show Amostra"></h:outputText> </p:commandLink>
+			              
+			            </div>
+			          </div>
+			          
+ 					<h:panelGrid columns="5" style="line-height: 3em;" >
+					<div class="form-group">
+						<h:outputLabel value="Selecione CPF:" styleClass="control-label" style="min-width: 7em;"/>
+						<div class="col-xs-10">	
+							<h:selectOneMenu id="selectparticipante" value="#{participante.cpf}" styleClass="btn btn-primary btn-sm btnPos" style="min-width: 8em;">
+								<f:selectItem itemValue="" itemLabel="---" />
+								<f:selectItems value="#{participante.getAllparticipanteAsList()}" var="all" itemValue="#{all.cpf}" itemLabel="#{all.cpf}"/>
+								<f:ajax listener="#{participante.searchOneparticipantebyId(participante.cpf)}" render=" :selectRecord:cpf" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="4" style="line-height: 4em;">
+						 <div class="form-group">
+							<h:outputLabel value="Digite CPF:" styleClass="control-label" style="min-width: 7em;"/>
+							<div class="col-xs-10">	
+								<h:inputText id="cpf" value="#{participante.cpf}" styleClass="form-control" style="max-width: 8em;"/>
+							</div>
+						</div>
+					</h:panelGrid>
+					
+					<div class="form-group" style="line-height: 4em;" >
+						<div class="col-xs-offset-2 col-xs-10">
+							<h:commandLink type="button" id="recover3" action="recover.xhtml" 
+								actionListener="#{amostra.searchAnAmostraSetbyparticipante(participante.cpf)}"
+								styleClass="btn btn-primary btn-sm btnPos" style="min-width: 18em;">						
+								<h:outputText value="Show All Amostras"></h:outputText> 
+							</h:commandLink>
+						</div>
+					</div>
+			          
+			             
+			        </h:panelGrid>
+			        <h:outputLabel id="msg" value="#{amostra.getMessage()}" />
+              </td>
+			  <td width="20%">
+				 <ul>
+				  <li>		  <p:commandLink id="list" oncomplete="window.open('listall.xhtml','_self')" >
+								     <h:outputText value="List"></h:outputText> 
+							  </p:commandLink>              
+				  </li>
+				  <li>		  <p:commandLink id="view" oncomplete="window.open('view.xhtml', '_self')" 
+				  				actionListener="#{amostra.searchOneAmostra}"	>
+							     <h:outputText value="Details"></h:outputText>
+							  </p:commandLink>              
+				  </li>
+				  <li>		  <p:commandLink id="update" oncomplete="window.open('update.xhtml', '_self')" >
+							     <h:outputText value="Update"></h:outputText>
+							  </p:commandLink>              
+				  </li>
+				  <li>		  <p:commandLink id="delete" oncomplete="window.open('delete.xhtml', '_self')"
+								actionListener= "#{amostra.deleteAmostraRecord()}" >
+							     <h:outputText value="Delete"></h:outputText>
+							  </p:commandLink>              
+				  </li>
+				</ul> 			  
+              </td>   			      
+      </h:form>              
+              <td width="50%">
+				<div id="header">
+		                  <ui:insert name="header">
+		                    <ui:include src="/templates/header.xhtml"/> 
+		                  </ui:insert>
+				</div>
+				<div id="content">
+		                  <ui:insert name="main"/> 
+		        </div>
+				<div id="footer">
+		                  <ui:insert name="footer">
+		                    <ui:include src="/templates/footer.xhtml"/> 
+		                  </ui:insert>
+				</div>
+              </td>
+            </tr>
+	  </table>
+
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

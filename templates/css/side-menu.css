@@ -1,0 +1,43 @@
+.side-menu-item {
+    border-top: 0.15em solid #e9ecef;
+    border-bottom: 0.15em solid #e9ecef;
+}
+
+.side-menu-item:first-child {
+    border-top: 0px;
+    border-bottom:0px;
+}
+
+.side-menu-item:last-child {
+    border-bottom: 0px
+}
+
+.side-menu-item:nth_child(even) {
+    border-top: 0.15em solid #e9ecef;
+    border-bottom: 0.15em solid #e9ecef;
+}
+/*
+.side-menu-item:last-child::before {
+    border-bottom: 0.15em solid #e9ecef;
+}
+*/
+
+ul[side-menu] > li:hover {
+    background-color: #fcfcfc;
+}
+
+.side-menu-item-active {
+    border-left: 0.2em solid #3a3939;
+}
+
+.side-menu-item-active > a {
+    color: #444444;
+}
+
+.side-menu-item-link {
+    color: #000000;
+}
+
+.side-menu-item-link:hover {
+    color: #868686;
+}

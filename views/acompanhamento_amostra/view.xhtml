@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<script>
+	//<![CDATA[
+	function start() { PF('statusDialog').show(); }
+	function stop() { PF('statusDialog').hide(); }
+	//]]>
+</script>
+
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+		<h:form id="viewAcompAmostraRecord">
+			<h3>Visualizar:</h3>
+
+			<h:panelGrid columns="1">
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Acompanhamento:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="idacompanhamento" value="#{acompanhamento_amostra.idacompanhamento}" styleClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Amostra:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="idamo" value="#{acompanhamento_amostra.idamo}" styleClass="form-control"
+											 readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<h:panelGrid columns="3">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Status:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="status" value="#{acompanhamento_amostra.status}" styleClass="form-control"
+											 readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Data Saída:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputTextarea id="data_saida" value="#{acompanhamento_amostra.data_saida}"
+									styleClass="form-control" width="500" readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Observação" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="observacao" value="#{acompanhamento_amostra.observacao}" styleClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

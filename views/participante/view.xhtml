@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="page.xhtml">
+    <ui:define name="main">
+
+        <!-- Include PrimeFlex CSS -->
+        <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
+
+        <!-- Growl for displaying messages -->
+        <p:growl id="growl" showDetail="true" life="5000" globalOnly="false" />
+
+        <h:form id="viewparticipanteRecord">
+
+            <h3 class="p-text-center">Visualizar Participante</h3>
+
+            <!-- Use PrimeFlex FormGrid classes -->
+            <div class="formgrid grid">
+
+                <!-- Numero Prontuario -->
+                <div class="field col-6 md:col-6">
+                    <label for="cpf">Número de Prontuário:</label>
+                    <p:inputText id="cpf" value="#{participante.cpf}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- CPF -->
+                <div class="field col-6 md:col-6">
+                    <label for="num_prontuario">CPF:</label>
+                    <p:inputText id="num_prontuario" value="#{participante.numProntuario}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Nome -->
+                <div class="field col-6 md:col-6">
+                    <label for="nome">Nome:</label>
+                    <p:inputText id="nome" value="#{participante.nome}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Nascimento -->
+                <div class="field col-6 md:col-6">
+                    <p:outputLabel for="nascimento" value="Nascimento:" />
+                    <p:inputText id="nascimento" value="#{participante.nascimento}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Cidade -->
+                <div class="field col-6 md:col-6">
+                    <label for="cidade">Cidade:</label>
+                    <p:inputText id="cidade" value="#{participante.cidade}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Estado -->
+                <div class="field col-6 md:col-6">
+                    <label for="estado">Estado:</label>
+                    <p:inputText id="estado" value="#{participante.estado}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Sexo -->
+                <div class="field col-6 md:col-6">
+                    <label for="sexo">Sexo:</label>
+                    <p:inputText id="sexo" value="#{participante.sexo}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Tipo -->
+                <div class="field col-6 md:col-6">
+                    <label for="tipo">Tipo:</label>
+                    <p:inputText id="tipo" value="#{participante.tipo_participante_desc}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Logradouro -->
+                <div class="field col-6 md:col-6">
+                    <label for="logradouro">Logradouro:</label>
+                    <p:inputText id="logradouro" value="#{participante.logradouro}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Número -->
+                <div class="field col-6 md:col-6">
+                    <label for="numero">Número:</label>
+                    <p:inputText id="numero" value="#{participante.numero}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Complemento -->
+                <div class="field col-6 md:col-6">
+                    <label for="complemento">Complemento:</label>
+                    <p:inputText id="complemento" value="#{participante.complemento}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Bairro -->
+                <div class="field col-6 md:col-6">
+                    <label for="bairro">Bairro:</label>
+                    <p:inputText id="bairro" value="#{participante.bairro}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- CEP -->
+                <div class="field col-6 md:col-6">
+                    <label for="cep">CEP:</label>
+                    <p:inputText id="cep" value="#{participante.cep}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Botão para abrir o modal -->
+                <div class="field col-12">
+                    <p:commandButton value="Visualizar Dados Clínicos"
+                                     oncomplete="PF('dlg').show();"
+                                     icon="pi pi-external-link"
+                                     styleClass="btn btn-primary"/>
+                </div>
+
+                <!-- Inclua o modal dos Dados Clínicos (somente leitura) -->
+                <ui:include src="modalDadosClinicosView.xhtml" />
+
+                <!-- Baixar Termo -->
+                <div class="field col-6 md:col-6">
+                    <label>Baixar Termo:</label>
+                    <div class="card">
+                        <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+                                         icon="pi pi-arrow-down" styleClass="mr-2">
+                            <p:fileDownload value="#{termo.download(participante.cpf)}"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+                <!-- Termo de Assentimento -->
+                <div class="field col-6 md:col-6">
+                    <label for="input_consentimento">Termo de Consentimento:</label>
+                    <p:inputText id="input_consentimento" value="#{termo.searchOneTermobyId(participante.cpf).getFilename()}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Baixar Termo de Assentimento -->
+                <div class="field col-6 md:col-6">
+                    <label>Baixar Termo de Assentimento:</label>
+                    <div class="card">
+                        <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+                                         icon="pi pi-arrow-down" styleClass="mr-2">
+                            <p:fileDownload value="#{termo_assentimento.download(participante.cpf)}"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+                <!-- Termo de Assentimento -->
+                <div class="field col-6 md:col-6">
+                    <label for="input_assentimento">Termo de Assentimento:</label>
+                    <p:inputText id="input_assentimento" value="#{termo_assentimento.searchOneTermoAssentimentobyId(participante.cpf).getFilename()}" readonly="true" class="w-full" />
+                </div>
+
+                <!-- Contatos -->
+                <div class="field col-12">
+                    <label for="contato">Contatos:</label>
+                    <p:chips id="contato"
+                             value="#{participante.getIndcon().items}"
+                             readonly="true"
+                             class="w-full" />
+                </div>
+
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

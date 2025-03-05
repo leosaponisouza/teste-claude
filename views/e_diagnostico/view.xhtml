@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"	 >
+		
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+	<h:form id="viewE_diagnosticoRecord">
+		<h3>Visualizar:</h3>
+	<h:panelGrid columns="4">
+		
+	<div class="form-group">
+		<h:outputLabel value="Descrição Exame:"	styleClass="control-label" />
+		<div class="col-xs-10" >
+		<h:inputText id="exame"	
+			value=
+			"#{e_diagnostico.getExame().getFinalidade()}_#{e_diagnostico.getExame().getMetodo()}_#{e_diagnostico.getExame().getAutor()}_#{e_diagnostico.getExame().getVersao()}"
+			styleClass="form-control" readonly="true" />
+		</div>		
+	</div>
+
+	<div class="form-group">
+		<h:outputLabel value="Código Exame:" styleClass="control-label" />
+		<div class="col-xs-10">	
+			<h:inputText id="idexa" value="#{e_diagnostico.idexa}" styleClass="form-control" readonly="true"/>
+		</div> 
+	</div>
+	
+	<div class="form-group">
+		<h:outputLabel value="Código E_amostra:" styleClass="control-label" />
+		<div class="col-xs-10">	
+			<h:inputText id="ideam" value="#{e_diagnostico.ideam}" styleClass="form-control" readonly="true" />
+		</div> 
+	</div>
+	
+		<div class="form-group">
+			<h:outputLabel value="Atualizado:"	styleClass="control-label"	/>
+				<div class="col-xs-10" >
+					<h:inputText id="data" style="max-width: 8em;" value="#{e_diagnostico.data}" styleClass="form-control" readonly="true"/>
+				</div>		
+	 	</div>
+
+		<div class="form-group">
+			<h:outputLabel value="Resultado:" styleClass="control-label" />
+			<div class="col-xs-10">
+				<h:inputText id="resultado" style="max-width: 8em;" value="#{e_diagnostico.resultado}" styleClass="form-control" 
+				readonly="true" /> 
+			</div> 
+		</div>
+
+		<div class="form-group">
+			<h:outputLabel value="Probabilidade:"	styleClass="control-label"	/>
+				<div class="col-xs-10" >
+				<h:inputText id="probabilidade" style="max-width: 8em;" value="#{e_diagnostico.probabilidade}" styleClass="form-control" readonly="true"/>
+				</div>		
+	 	</div>
+	 	
+	 </h:panelGrid>
+
+	</h:form>
+	</ui:define> 
+</ui:composition>
+</html>

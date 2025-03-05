@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"	>
+
+<f:metadata>
+	<f:event type="postAddToView" listener="#{projeto.init()}"/>	
+</f:metadata>
+
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+
+	<h:form id="updateDiagnosticoRecord" display= "grid" >
+		<h3>Atualizar:</h3>
+	<h:panelGrid columns="4">
+
+		<div class="form-group">
+			<h:outputLabel value="Diagnostico:" styleClass="control-label" />
+				<div class="col-xs-10">	
+					<h:inputText id="iddia" value="#{diagnostico.iddia}" styleClass="form-control" readonly="true" />
+				</div>
+		</div>
+			
+		<div class="form-group">
+			<h:outputLabel value="Amostra:" styleClass="control-label" />
+			<div class="col-xs-10">	
+				<h:inputText id="idamo" value="#{diagnostico.idamo}" styleClass="form-control" readonly="true" />
+			</div> 
+		</div>
+			
+		<div class="form-group">
+			<h:outputLabel value="Resultado:" styleClass="control-label"/>
+			<div class="col-xs-10">	
+				<h:selectOneMenu id="resultado" value="#{diagnostico.resultado}" styleClass="btn btn-primary btn-sm btnPos" >
+					<f:selectItem itemValue="Aguardado" itemLabel="Aguardado" />
+					<f:selectItem itemValue="Inconclusivo" itemLabel="Inconclusivo" />
+					<f:selectItem itemValue="Negativo" itemLabel="Negativo" />
+					<f:selectItem itemValue="Positivo" itemLabel="Positivo" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+			
+		<div class="form-group">
+			<h:outputLabel value="Exame" styleClass="control-label" />
+			<div class="col-xs-10">	
+				<h:selectOneMenu id="selectExame" value="#{diagnostico.idexa}" styleClass="btn btn-primary btn-sm btnPos" >
+					<f:selectItem itemValue="" itemLabel="---" />
+					<f:selectItems value="#{exame.getAllExameAsList(1)}" var="exa" itemValue="#{exa.idexa}" itemLabel="#{exa.finalidade}_#{exa.metodo}_#{exa.autor}_#{exa.versao}"/>
+				</h:selectOneMenu>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<h:outputLabel value="Atualizado:"	styleClass="control-label" />
+			<div class="col-xs-10" >
+				<p:datePicker id="data_conclusao" inputStyle="width:100px" value="#{diagnostico.data_conclusao}" pattern="yyyy-MM-dd" mask="true"
+							  converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030"  />
+			</div>		
+		</div>
+
+		<div class="form-group">
+			<h:outputLabel value="Previsão"	styleClass="control-label"/>
+			<div class="col-xs-10" >
+				<h:inputText id="data_prevista" value="#{diagnostico.data_prevista}" styleClass="form-control" readonly="true"/>
+			</div>		
+		</div>
+		
+		<div class="form-group">
+			<div class="col-xs-offset-2 col-xs-10">
+				<h:commandLink value="Update" 
+					actionListener="#{diagnostico.updateDiagnosticoDetails()}" 
+					style="min-width: 15em;"
+					styleClass="btn btn-primary btn-sm btnPos" oncomplete="window.open('update.xhtml', '_self')" >
+				</h:commandLink>
+			</div>
+		</div>
+			
+	</h:panelGrid>
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

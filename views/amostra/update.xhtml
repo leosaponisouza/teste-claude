@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:event type="postAddToView" listener="#{projeto.init()}" />
+</f:metadata>
+
+<script>
+	//<![CDATA[
+	function start() { PF('statusDialog').show(); }
+	function stop() { PF('statusDialog').hide(); }
+	//]]>
+</script>
+
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+
+		<h:form id="updateAmostraRecord" display="grid">
+			<h3>Atualizar:</h3>
+
+			<h:panelGrid columns="1">
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Amostra:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="idamo" value="#{amostra.idamo}" styleClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="CPF:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="cpf" value="#{amostra.cpf}" styleClass="form-control"
+									readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Projeto" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:selectOneMenu id="selectProjeto" value="#{amostra.idpro}"
+									styleClass="btn btn-primary btn-sm btnPos">
+									<f:selectItem itemValue="" itemLabel="---" />
+									<f:selectItems value="#{projeto.getProjetoAll()}" var="prj" itemValue="#{prj.idpro}"
+										itemLabel="#{prj.titulo}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Tipo amostra:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:selectOneMenu id="selectTipoamostra" value="#{amostra.tipo_amostra}"
+									styleClass="btn btn-primary btn-sm btnPos">
+									<f:selectItem itemValue="" itemLabel="---" />
+									<f:selectItems value="#{amostra.getAlltipo_amostras()}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				COLETA:
+				<h:panelGrid columns="4">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Data:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<p:datePicker id="data_coleta" inputStyle="width:100px" value="#{amostra.data_coleta}"
+											  pattern="yyyy-MM-dd" mask="true"
+											  converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030"  />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Validade:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="validade_coleta" value="#{amostra.validade_coleta}"
+									styleClass="form-control" style="max-width: 5em;" />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Local:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="local_coleta" value="#{amostra.local_coleta}"
+									styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<h:panelGrid columns="2">
+							<div class="form-group">
+								<h:outputLabel value="Lote:" styleClass="control-label" />
+								<div class="col-xs-10">
+									<h:inputText id="lote" value="#{amostra.lote}" styleClass="form-control"
+										style="max-width: 7em;" />
+								</div>
+							</div>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<div class="form-group">
+								<h:outputLabel value="Etiqueta:" styleClass="control-label" />
+								<div class="col-xs-10">
+									<h:inputText id="etiqueta" value="#{amostra.etiqueta}" styleClass="form-control"
+										style="max-width: 7em;" />
+								</div>
+							</div>
+						</h:panelGrid>
+					</h:panelGrid>
+
+
+				</h:panelGrid>
+
+				DIAGNÓSTICO:
+				<h:panelGrid columns="4">
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Resultado:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:selectOneMenu id="resultado" value="#{amostra.getDiagnostico().resultado}"
+									styleClass="btn btn-primary btn-sm btnPos">
+									<f:selectItem itemValue="Aguardado" itemLabel="Aguardado" />
+									<f:selectItem itemValue="Inconclusivo" itemLabel="Inconclusivo" />
+									<f:selectItem itemValue="Negativo" itemLabel="Negativo" />
+									<f:selectItem itemValue="Positivo" itemLabel="Positivo" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Exame" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:selectOneMenu id="selectExame" value="#{amostra.getDiagnostico().idexa}"
+									styleClass="btn btn-primary btn-sm btnPos">
+									<f:selectItem itemValue="" itemLabel="---" />
+									<f:selectItems value="#{amostra.getDiagnostico().getExame().getAllExameAsList(1)}"
+										var="exa" itemValue="#{exa.idexa}"
+										itemLabel="#{exa.finalidade}_#{exa.metodo}_#{exa.autor}_#{exa.versao}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Atualizado:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<p:datePicker id="data_conclusao" inputStyle="width:100px"
+									value="#{amostra.getDiagnostico().data_conclusao}" pattern="yyyy-MM-dd" mask="true"
+											  converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030"  />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Previsão" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="data_prevista" value="#{amostra.getDiagnostico().data_prevista}"
+									styleClass="form-control" readonly="true" />
+							</div>
+						</div>
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<div class="form-group">
+					<p:outputLabel for="sintoma" value="Sintomas: " style="min-width: 10em;" />
+					<div class="col-xs-10">
+						<p:chips id="sintoma" value="#{amostra.getAmostra_sintoma().items}"
+							placeholder="'Enter' para aceitar." styleClass="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<p:outputLabel for="medicamento" value="Medicamentos: " style="min-width: 10em;" />
+					<div class="col-xs-10">
+						<p:chips id="medicamento" value="#{amostra.getAmostra_medicamento().items}"
+							placeholder="'Enter' para aceitar." styleClass="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<p:outputLabel for="armazenagem" value="Armazenagem: " style="min-width: 10em;" />
+					<div class="col-xs-10">
+						<p:chips id="armazenagem" value="#{amostra.getAmostra_armazenagem().items}"
+							placeholder="'Enter' para aceitar." styleClass="form-control" />
+					</div>
+				</div>
+				E_AMOSTRA:
+				<h:panelGrid columns="4">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Técnica:" styleClass="control-label" style="min-width: 10em;" />
+							<div class="col-xs-10">
+								<h:inputText id="tecnica" value="#{e_amostra.tecnica}" styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Digitalizado por:" styleClass="control-label"
+								style="min-width: 10em;" />
+							<div class="col-xs-10">
+								<h:inputText id="digitalizado_por" value="#{e_amostra.digitalizado_por}"
+									styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="SRA:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="codigo_acesso" value="#{e_amostra.codigo_acesso}"
+									styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="BioSample:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="codigo_biosample" value="#{e_amostra.codigo_biosample}"
+									styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+				<div class="form-group">
+					<div class="col-xs-10">
+						<h:outputLabel id="input" value="#{e_amostra.getMessage()}" />
+					</div>
+				</div>
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="4">
+
+				<div class="form-group">
+					<h:outputLabel value="Lista E_amostras" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:dataTable id="findE_amostraRecordDetails" rendered="#{not empty findE_amostrasByIdAmostra}"
+							value="#{e_amostra.searchE_amostrasbyIdAmostra(amostra.getIdamo())}" var="idamoset">
+							<h:column>
+								<f:facet name="header">Identificador</f:facet>
+								<h:outputText value="#{idamoset.ideam}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Data</f:facet>
+								<h:outputText value="#{idamoset.data}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Técnica</f:facet>
+								<h:outputText value="#{idamoset.tecnica}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Ações</f:facet>
+								<p:commandLink id="delete" oncomplete="window.open('update.xhtml', '_self')"
+									actionListener="#{e_amostra.deleteE_amostraRecordbyId(idamoset.ideam)}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-trash" viewBox="0 0 16 16">
+										<path
+											d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+										<path fill-rule="evenodd"
+											d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+									</svg>
+								</p:commandLink>
+								<p:commandLink id="download" ajax="false">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-cloud-download" viewBox="0 0 16 16">
+										<path
+											d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z" />
+										<path
+											d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z" />
+									</svg>
+									<p:fileDownload value="#{e_amostra.download(idamoset.ideam)}" />
+								</p:commandLink>
+							</h:column>
+						</h:dataTable>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-10">
+						<h:commandLink value="Update" actionListener="#{amostra.updateAllAmostraDetails(e_amostra, amostra.getAmostra_sintoma(), amostra.getAmostra_medicamento(), 
+	    amostra.getAmostra_armazenagem(), amostra.getDiagnostico())}" style="min-width: 15em;"
+							styleClass="btn btn-primary btn-sm btnPos"
+							oncomplete="window.open('update.xhtml', '_self')">
+						</h:commandLink>
+					</div>
+				</div>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

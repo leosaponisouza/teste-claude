@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+  <f:event type="postAddToView" listener="#{amostra.init()}" />
+  <f:event type="postAddToView" listener="#{e_amostra.init()}" />
+  <f:event type="postAddToView" listener="#{projeto.init()}" />
+</f:metadata>
+
+<ui:composition template="page.xhtml">
+  <ui:define name="main">
+    <h:form id="addE_AmostraRecord" enctype="multipart/form-data">
+      <h3>Criar:</h3>
+      <h:panelGrid columns="4">
+
+        <div class="form-group">
+          <h:outputLabel value="Selecione Amostra:" styleClass="control-label" style="min-width: 7em;" />
+          <div class="col-xs-10">
+            <h:selectOneMenu id="selectAmostra" value="#{amostra.idamo}" styleClass="btn btn-primary btn-sm btnPos">
+              <f:selectItem itemValue="" itemLabel="---" />
+              <f:selectItems value="#{amostra.getAllAmostraAsList()}" var="all" itemValue="#{all.idamo}"
+                itemLabel="#{all.idamo}" />
+              <f:ajax listener="#{e_amostra.setIdamo(amostra.idamo)}" render=" :addE_AmostraRecord:idamo" />
+            </h:selectOneMenu>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h:outputLabel value="Digite Amostra" styleClass="control-label" />
+          <div class="col-xs-10">
+            <h:inputText id="idamo" value="#{e_amostra.idamo}" styleClass="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h:outputLabel value="Digite/selecione Data:" styleClass="control-label" />
+          <div class="col-xs-10">
+            <p:datePicker id="data" value="#{e_amostra.data}" pattern="yyyy-MM-dd" mask="true"
+                          converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030"  />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h:outputLabel value="Técnica:" styleClass="control-label" />
+          <div class="col-xs-10">
+            <h:inputText id="tecnica" value="#{e_amostra.tecnica}" styleClass="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h:outputLabel value="Digitalizado por:" styleClass="control-label" />
+          <div class="col-xs-10">
+            <h:inputText id="digitalizado_por" value="#{e_amostra.digitalizado_por}" styleClass="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h:outputLabel value="Código SRA:" styleClass="control-label" />
+          <div class="col-xs-10">
+            <h:inputText id="codigo_acesso" value="#{e_amostra.codigo_acesso}" styleClass="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h:outputLabel value="Código BioSample:" styleClass="control-label" />
+          <div class="col-xs-10">
+            <h:inputText id="codigo_biosample" value="#{e_amostra.codigo_biosample}" styleClass="form-control" />
+          </div>
+        </div>
+
+        <!-- <div class="form-group">
+          <h:outputLabel value="" styleClass="control-label" />
+          <div class="col-xs-10">
+            <h:outputLabel id="input" value="#{e_amostra.getMessage()}" />
+          </div>
+        </div> -->
+
+        <div class="form-group">
+          <div class="col-xs-offset-2 col-xs-10">
+            <h:commandLink value="Save Record" actionListener="#{e_amostra.saveE_amostraRecord()}"
+              styleClass="btn btn-primary btn-sm btnPos">
+            </h:commandLink>
+          </div>
+        </div>
+      </h:panelGrid>
+
+    </h:form>
+  </ui:define>
+</ui:composition>
+
+</html>

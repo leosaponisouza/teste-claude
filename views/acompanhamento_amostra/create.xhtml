@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:event type="postAddToView" listener="#{acompanhamento_amostra.init()}" />
+	<f:event type="postAddToView" listener="#{amostra.init()}" />
+</f:metadata>
+
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+		<h:form id="addAcompAmostraRecord" enctype="multipart/form-data">
+			<h3>Criar:</h3>
+			<h:panelGrid columns="1">
+
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Amostra: Selecione" styleClass="control-label" style="min-width: 10em;" />
+							<div class="col-xs-10">
+								<h:selectOneMenu id="selectamostra" value="#{acompanhamento_amostra.idamo}"
+									styleClass="btn btn-primary btn-sm btnPos">
+									<f:selectItem itemValue="" itemLabel="---" />
+									<f:selectItems value="#{amostra.getAllAmostraAsList()}" var="all"
+										itemValue="#{all.idamo}" itemLabel="#{all.idamo}" />
+									<f:ajax render=" :addAcompAmostraRecord:idamo" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Digite:" styleClass="control-label" style="min-width: 10em;" />
+							<div class="col-xs-10">
+								<h:inputText id="idamo" value="#{acompanhamento_amostra.idamo}" styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<h:panelGrid columns="3">
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Data Saída:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<p:calendar id="data_saida" inputStyle="width:100px" value="#{acompanhamento_amostra.data_saida}"
+									pattern="yyyy-MM-dd" converter="dateconverter" />
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Status: Selecione" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:selectOneMenu id="selectStatus" value="#{acompanhamento_amostra.status}"
+												 styleClass="btn btn-primary btn-sm btnPos">
+									<f:selectItem itemValue="" itemLabel="---" />
+									<f:selectItems value="#{acompanhamento_amostra.getAlltipo_status()}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2">
+						<div class="form-group">
+							<h:outputLabel value="Observação:" styleClass="control-label" />
+							<div class="col-xs-10">
+								<h:inputText id="observacao" value="#{acompanhamento_amostra.observacao}"
+									styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<div class="form-group">
+				<div class="col-xs-offset-2 col-xs-10">
+					<h:commandLink value="Save Record" actionListener="#{acompanhamento_amostra.saveAllAcompAmostraRecord()}"
+						styleClass="btn btn-primary btn-sm btnPos">
+					</h:commandLink>
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+		<h:form id="viewProjetoRecord">
+			<h3>Visualizar:</h3>
+			<h:panelGrid columns="4">
+
+				<div class="form-group">
+					<h:outputLabel value="Projeto:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputText id="idpro" value="#{projeto.idpro}" styleClass="form-control" readonly="true" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Projeto:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputTextarea id="titulo" value="#{projeto.titulo}" styleClass="form-control" width="500"
+							readonly="true" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Responsável:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputText id="responsavel" value="#{projeto.responsavel}" styleClass="form-control"
+							readonly="true" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Data:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputText id="data" value="#{projeto.data}" styleClass="form-control" readonly="true" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Código Bio Project:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputText id="codigo_bioproject" value="#{projeto.codigo_bioproject}"
+							styleClass="form-control" readonly="true" />
+					</div>
+				</div>
+
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

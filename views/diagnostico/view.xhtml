@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"	xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"	 >
+		
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+	<h:form id="viewDiagnosticoRecord">
+		<h3>Visualizar:</h3>
+	<h:panelGrid columns="4">
+		
+	<div class="form-group">
+		<h:outputLabel value="Diagnostico:" styleClass="control-label" />
+		<div class="col-xs-10">	
+			<h:inputText id="iddia" value="#{diagnostico.iddia}" styleClass="form-control" readonly="true"/>
+		</div> 
+	</div>
+		
+	<div class="form-group">
+		<h:outputLabel value="Amostra" styleClass="control-label" />
+		<div class="col-xs-10">	
+			<h:inputText id="idamo" value="#{diagnostico.idamo}" styleClass="form-control" readonly="true" />
+		</div> 
+	</div>
+
+
+		<div class="form-group">
+			<h:outputLabel value="Resultado:" styleClass="control-label" />
+			<div class="col-xs-10">
+				<h:inputText id="resultado" style="max-width: 8em;" value="#{diagnostico.resultado}" styleClass="form-control" 
+				readonly="true" /> 
+			</div> 
+		</div>
+			
+		<div class="form-group">
+			<h:outputLabel value="Exame"	styleClass="control-label" />
+			<div class="col-xs-10" >
+				<h:inputText id="exame"	
+					value=
+					"#{diagnostico.getExame().getFinalidade()}_#{diagnostico.getExame().getMetodo()}_#{diagnostico.getExame().getAutor()}_#{diagnostico.getExame().getVersao()}"
+					styleClass="form-control" readonly="true" />
+			</div>		
+		</div>
+		
+		<div class="form-group">
+			<h:outputLabel value="Atualizado:"	styleClass="control-label"	/>
+				<div class="col-xs-10" >
+					<h:inputText id="data_conclusao" style="max-width: 8em;" value="#{diagnostico.data_conclusao}" styleClass="form-control" readonly="true"/>
+				</div>		
+	 	</div>
+
+		<div class="form-group">
+			<h:outputLabel value="Previsão:"	styleClass="control-label"	/>
+				<div class="col-xs-10" >
+					<h:inputText id="data_prevista" style="max-width: 8em;" value="#{diagnostico.data_prevista}" styleClass="form-control" readonly="true"/>
+				</div>		
+	 	</div>
+	 </h:panelGrid>
+
+	</h:form>
+	</ui:define> 
+</ui:composition>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="page.xhtml">
+	<ui:define name="main">
+		<h:form id="addProjetoRecord" enctype="multipart/form-data">
+			<h3>Criar:</h3>
+			<h:panelGrid columns="4">
+
+				<div class="form-group">
+					<h:outputLabel value="Projeto:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputTextarea id="titulo" value="#{projeto.titulo}" styleClass="form-control" width="500" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Responsável:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputText id="responsavel" value="#{projeto.responsavel}" styleClass="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Data:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<p:datePicker id="data" inputStyle="width:100px" value="#{projeto.data}" pattern="yyyy-MM-dd" mask="true"
+									  converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<h:outputLabel value="Código Bio Project:" styleClass="control-label" />
+					<div class="col-xs-10">
+						<h:inputText id="codigo_bioproject" value="#{projeto.codigo_bioproject}"
+							styleClass="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-10">
+						<h:commandLink value="Save Record" actionListener="#{projeto.saveProjetoRecord()}"
+							styleClass="btn btn-primary btn-sm btnPos">
+						</h:commandLink>
+					</div>
+				</div>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
