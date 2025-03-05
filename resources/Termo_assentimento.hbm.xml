@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.Termo_assentimento" table="termo_assentimento" catalog="public" optimistic-lock="version">
+        <id name="cpf" type="java.lang.Long">
+            <column name="cpf" />
+            <generator class="assigned" />
+        </id>
+        <property name="pdf" type="string">
+            <column name="pdf" />
+        </property>
+        <property name="data" type="date">
+            <column name="data" />
+        </property>
+        <property name="filename" type="string">
+            <column name="filename" />
+        </property>
+    </class>
+</hibernate-mapping>

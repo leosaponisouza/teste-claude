@@ -1,0 +1,62 @@
+wget https://github.com/broadinstitute/gatk/releases/download/4.6.0.0/gatk-4.6.0.0.zip
+python -m pip install --upgrade pip
+pip -V
+pip install numpy scipy tensorflow pymc3 keras scikit-learn matplotlib pandas biopythonpysam 
+sudo emacs /etc/bash.bashrc
+	export PATH=$PATH:/usr/local/blast/bin:/home/anderson/.local/bin
+source /etc/bash.bashrc 
+echo $PATH
+sudo R
+R
+
+sed -i "s/.\+chromosome \([[:digit:]]\+\),.\+/>\1/g" *.fasta
+
+samtools faidx hg38.fa
+gatk CreateSequenceDictionary -R hg38.fa -O hg38.dict
+
+sed "s/>/>chr/g" hg38.fa > chrhg38.fa
+sed -i "s/>chrMT/>chrM/g" chrhg38.fa
+samtools faidx chrhg38.fa
+gatk CreateSequenceDictionary -R chrhg38.fa -O chrhg38.dict
+
+sudo update-alternatives --config java 
+tar xvf 1.tar 
+
+#38.p7
+wget ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh38p7/VCF/00-All.vcf.gz
+
+Este arquivo possui 16G compactado e 112G descompactado. Foi necessário descompactar e mudar com um 
+sed a identificação dos cromossomos em todas as linhas do arquivo. Mudei o nome do arquivo para GRCh38p14.
+Não existe um GRCh38p14 disponível para download em lugar algum até a data desta configuração.
+
+sed -e 's/^[0-9]\+\t/chr&/' -e 's/^[XY]\t/chr&/' -e 's/^MT\t/chrM\t/'  GRCh38p7.vcf > GRCh38p14_chr.vcf
+
+wget ftp://ftp.ncbi.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
+wget http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.wgs.phase3_shapeit2_mvncall_integrated_v5c.20130502.sites.vcf.gz 
+wget http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.wgs.phase3_shapeit2_mvncall_integrated_v5c.20130502.sites.vcf.gz.tbi
+
+gatk IndexFeatureFile -I 00-All.vcf.gz 
+
+gatk --java-options "-Xmx8g" HaplotypeCaller -R ../reference/GRCh38.p14/chrhg38.fa -I 1.recal.bam -O 1.new.g.vcf -ERC GVCF
+gatk --java-options "-Xmx8g" GenotypeGVCFs -R ../reference/GRCh38.p14/chrhg38.fa -V 1.new.g.vcf -O 1.genotyped.vcf
+
+samtools faidx hg38final.fa
+gatk CreateSequenceDictionary -R hg38final.fa -O hg38final.dict
+
+sed "s/chrM/MT/g;s/chr\([0-9XY]\+\)/\1/g" 1.new.g.vcf > 1.copy.g.vcf
+gatk IndexFeatureFile -I 1.copy.g.vcf
+
+../annotate 1.new.g.vcf
+
+./vep -i  ~/data/asm/exoma/01/final.1.genotyped.ann.vcf --cache --dir_cache /home/anderson/data/src/databases/homo_sapiens_vep_112_GRCh38 --fork 40 -o ~/data/asm/exoma/01/report
+
+ awk -F'\t' '{ print $7}' report | grep missense_variant | grep -v MODERATE | wc -l 
+8056
+ awk -F'\t' '{ print $7}' report | grep missense_variant | grep -v MODERATE | grep NMD_transcript_variant | wc -l
+1209
+ awk -F'\t' '{ print $7}' report | grep missense_variant | grep -v MODERATE | grep splice_region_variant | wc -l
+150
+ awk -F'\t' '{ print $7}' report | grep missense_variant | grep -v MODERATE | grep splice_region_variant | grep NMD_transcript_variant | wc -l 
+8
+
+./vep -i  ~/data/asm/exoma/00/data/DNA-00.final.vcf --cache --dir_cache /home/anderson/data/src/databases/homo_sapiens_vep_112_GRCh38 --fork 40 -o ~/data/asm/exoma/00/DNA-00.final.vep

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.Amostra" table="amostra" catalog="public" optimistic-lock="version">
+        <id name="idamo" type="integer">
+            <column name="idamo" />
+            <generator class="assigned" />
+        </id>
+        <property name="data_coleta" type="date">
+            <column name="data_coleta" />
+        </property>
+        <property name="etiqueta" type="string">
+            <column name="etiqueta" />
+        </property>
+        <property name="tipo_amostra" type="string">
+            <column name="tipo_amostra" />
+        </property>
+        <property name="lote" type="string">
+            <column name="lote" />
+        </property>
+        <property name="validade_coleta" type="integer">
+            <column name="validade_coleta" />
+        </property>
+        <property name="local_coleta" type="string">
+            <column name="local_coleta" />
+        </property>
+        <property name="cpf" type="java.lang.Long">
+            <column name="cpf" />
+        </property>
+        <property name="idpro" type="integer">
+            <column name="idpro" />
+        </property>
+    </class>
+</hibernate-mapping>

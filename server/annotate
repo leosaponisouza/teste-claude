@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ -r $1 ]]; then
+
+gatk VariantAnnotator \
+  -R /home/anderson/data/asm/exoma/reference/GRCh38.p14/chrhg38.fa \
+  -V $1 \
+  -O final.$1 \
+  --dbsnp /home/anderson/data/src/databases/GRCh38p14_chr.vcf.gz \
+  --resource:1000G,known=false,training=true,truth=true,prior=10 /home/anderson/data/src/databases/ALL.wgs.shapeit2_integrated_snvindels_v2a.GRCh38.27022019.sites_chr.vcf.gz \
+  --resource:ClinVar,known=false,training=true,truth=true,prior=10 /home/anderson/data/src/databases/clinvar_chr.vcf.gz
+fi

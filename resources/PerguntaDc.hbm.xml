@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.model.PerguntaDc" table="pergunta_dc">
+        <id name="id" column="id" type="java.lang.Integer">
+            <generator class="increment"/>
+        </id>
+        <property name="texto" column="texto" type="java.lang.String"/>
+        <property name="flagAtivo" column="flag_ativo" type="java.lang.Boolean"/>
+        <property name="tipo" column="tipo" type="java.lang.String"/>
+    </class>
+</hibernate-mapping>

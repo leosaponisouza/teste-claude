@@ -1,0 +1,1458 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.13 (Ubuntu 14.13-0ubuntu0.22.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: acompanhamento_amostra; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.acompanhamento_amostra (
+    idacompanhamento integer NOT NULL,
+    data_saida date NOT NULL,
+    status character varying(255) NOT NULL,
+    observacao character varying(255) NOT NULL,
+    idamo integer
+);
+
+
+ALTER TABLE public.acompanhamento_amostra OWNER TO postgres;
+
+--
+-- Name: acompanhamento_amostra_idacompanhamento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.acompanhamento_amostra_idacompanhamento_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.acompanhamento_amostra_idacompanhamento_seq OWNER TO postgres;
+
+--
+-- Name: acompanhamento_amostra_idacompanhamento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.acompanhamento_amostra_idacompanhamento_seq OWNED BY public.acompanhamento_amostra.idacompanhamento;
+
+
+--
+-- Name: amostra; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.amostra (
+    etiqueta character varying(200),
+    idamo integer NOT NULL,
+    data_coleta date DEFAULT CURRENT_DATE NOT NULL,
+    tipo_amostra character varying(50) NOT NULL,
+    lote character varying(50),
+    validade_coleta integer NOT NULL,
+    local_coleta character varying(100) NOT NULL,
+    cpf bigint NOT NULL,
+    idpro integer NOT NULL
+);
+
+
+ALTER TABLE public.amostra OWNER TO exomaadm;
+
+--
+-- Name: amostra_armazenagem; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.amostra_armazenagem (
+    armazenagem character varying(200) NOT NULL,
+    idamo integer NOT NULL
+);
+
+
+ALTER TABLE public.amostra_armazenagem OWNER TO exomaadm;
+
+--
+-- Name: amostra_idamo_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.amostra_idamo_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.amostra_idamo_seq OWNER TO exomaadm;
+
+--
+-- Name: amostra_idamo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.amostra_idamo_seq OWNED BY public.amostra.idamo;
+
+
+--
+-- Name: amostra_medicamento; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.amostra_medicamento (
+    medicamento character varying(200) NOT NULL,
+    idamo integer NOT NULL
+);
+
+
+ALTER TABLE public.amostra_medicamento OWNER TO exomaadm;
+
+--
+-- Name: amostra_sintoma; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.amostra_sintoma (
+    sintoma character varying(200) NOT NULL,
+    idamo integer NOT NULL
+);
+
+
+ALTER TABLE public.amostra_sintoma OWNER TO exomaadm;
+
+--
+-- Name: diagnostico; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.diagnostico (
+    data_conclusao date DEFAULT CURRENT_DATE NOT NULL,
+    resultado character varying(200) NOT NULL,
+    data_prevista date,
+    iddia integer NOT NULL,
+    idexa integer NOT NULL,
+    idamo integer NOT NULL
+);
+
+
+ALTER TABLE public.diagnostico OWNER TO exomaadm;
+
+--
+-- Name: diagnostico_iddia_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.diagnostico_iddia_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.diagnostico_iddia_seq OWNER TO exomaadm;
+
+--
+-- Name: diagnostico_iddia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.diagnostico_iddia_seq OWNED BY public.diagnostico.iddia;
+
+
+--
+-- Name: e_amostra; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.e_amostra (
+    digitalizado_por character varying(50),
+    data date DEFAULT CURRENT_DATE NOT NULL,
+    ideam integer NOT NULL,
+    tecnica character varying(100) NOT NULL,
+    idamo integer NOT NULL,
+    codigo_acesso character varying(13),
+    codigo_biosample character varying(13)
+);
+
+
+ALTER TABLE public.e_amostra OWNER TO exomaadm;
+
+--
+-- Name: e_amostra_ideam_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.e_amostra_ideam_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.e_amostra_ideam_seq OWNER TO exomaadm;
+
+--
+-- Name: e_amostra_ideam_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.e_amostra_ideam_seq OWNED BY public.e_amostra.ideam;
+
+
+--
+-- Name: e_diagnostico; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.e_diagnostico (
+    data date DEFAULT CURRENT_DATE NOT NULL,
+    resultado character varying(100) NOT NULL,
+    probabilidade numeric NOT NULL,
+    ideam integer NOT NULL,
+    idexa integer NOT NULL
+);
+
+
+ALTER TABLE public.e_diagnostico OWNER TO exomaadm;
+
+--
+-- Name: e_diagnostico_ideam_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.e_diagnostico_ideam_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.e_diagnostico_ideam_seq OWNER TO exomaadm;
+
+--
+-- Name: e_diagnostico_ideam_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.e_diagnostico_ideam_seq OWNED BY public.e_diagnostico.ideam;
+
+
+--
+-- Name: exame; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.exame (
+    data_versao date DEFAULT CURRENT_DATE NOT NULL,
+    metodo character varying(200) NOT NULL,
+    autor character varying(200) NOT NULL,
+    idexa integer NOT NULL,
+    nome character varying(200) NOT NULL,
+    versao character varying(50),
+    finalidade character varying(100),
+    prazo_conclusao integer,
+    ambiente integer NOT NULL
+);
+
+
+ALTER TABLE public.exame OWNER TO exomaadm;
+
+--
+-- Name: exame_idexa_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.exame_idexa_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.exame_idexa_seq OWNER TO exomaadm;
+
+--
+-- Name: exame_idexa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.exame_idexa_seq OWNED BY public.exame.idexa;
+
+
+--
+-- Name: funcao; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.funcao (
+    idusu integer NOT NULL,
+    idper integer NOT NULL
+);
+
+
+ALTER TABLE public.funcao OWNER TO exomaadm;
+
+--
+-- Name: meta_amostra; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.meta_amostra (
+    atualizado_em date,
+    criado_em date,
+    criado_por character varying(50),
+    atualizado_por character varying(50),
+    idamo integer NOT NULL
+);
+
+
+ALTER TABLE public.meta_amostra OWNER TO exomaadm;
+
+--
+-- Name: padroes; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.padroes (
+    faixa character varying(50) NOT NULL,
+    sexo character(1) NOT NULL,
+    minimo character varying(50) NOT NULL,
+    maximo character varying(50) NOT NULL,
+    medio character varying(50),
+    significado character varying(200),
+    idpad integer NOT NULL,
+    idexa integer NOT NULL
+);
+
+
+ALTER TABLE public.padroes OWNER TO exomaadm;
+
+--
+-- Name: padroes_idpad_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.padroes_idpad_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.padroes_idpad_seq OWNER TO exomaadm;
+
+--
+-- Name: padroes_idpad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.padroes_idpad_seq OWNED BY public.padroes.idpad;
+
+
+--
+-- Name: participante; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.participante (
+    nascimento date DEFAULT CURRENT_DATE NOT NULL,
+    cpf bigint NOT NULL,
+    nome character varying(200) NOT NULL,
+    logradouro character varying(100),
+    cidade character varying(50) NOT NULL,
+    estado character varying(20) NOT NULL,
+    sexo character(1) NOT NULL,
+    cep integer,
+    bairro character varying(50),
+    numero integer,
+    complemento character varying(20),
+    tipo integer NOT NULL,
+    num_prontuario character varying(20)
+);
+
+
+ALTER TABLE public.participante OWNER TO exomaadm;
+
+--
+-- Name: participante_contato; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.participante_contato (
+    contato character varying(100) NOT NULL,
+    cpf bigint NOT NULL
+);
+
+
+ALTER TABLE public.participante_contato OWNER TO exomaadm;
+
+--
+-- Name: pergunta_dc; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pergunta_dc (
+    id integer NOT NULL,
+    texto character varying(255) NOT NULL,
+    flag_ativo boolean NOT NULL,
+    tipo character varying
+);
+
+
+ALTER TABLE public.pergunta_dc OWNER TO postgres;
+
+--
+-- Name: pergunta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.pergunta_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pergunta_id_seq OWNER TO postgres;
+
+--
+-- Name: pergunta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.pergunta_id_seq OWNED BY public.pergunta_dc.id;
+
+
+--
+-- Name: permissao; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.permissao (
+    idper integer NOT NULL,
+    descricao character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.permissao OWNER TO exomaadm;
+
+--
+-- Name: permissao_idper_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.permissao_idper_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.permissao_idper_seq OWNER TO exomaadm;
+
+--
+-- Name: permissao_idper_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.permissao_idper_seq OWNED BY public.permissao.idper;
+
+
+--
+-- Name: projeto; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.projeto (
+    idpro integer NOT NULL,
+    responsavel character varying(200) NOT NULL,
+    data date DEFAULT CURRENT_DATE NOT NULL,
+    titulo character varying(500) NOT NULL,
+    codigo_bioproject character varying(13)
+);
+
+
+ALTER TABLE public.projeto OWNER TO exomaadm;
+
+--
+-- Name: projeto_idpro_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.projeto_idpro_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.projeto_idpro_seq OWNER TO exomaadm;
+
+--
+-- Name: projeto_idpro_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.projeto_idpro_seq OWNED BY public.projeto.idpro;
+
+
+--
+-- Name: resposta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.resposta_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.resposta_id_seq OWNER TO postgres;
+
+--
+-- Name: resposta_dc; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.resposta_dc (
+    participante_cpf integer NOT NULL,
+    pergunta_id integer NOT NULL,
+    resposta character varying(10) NOT NULL,
+    descricao text,
+    id integer DEFAULT nextval('public.resposta_id_seq'::regclass) NOT NULL
+);
+
+
+ALTER TABLE public.resposta_dc OWNER TO postgres;
+
+--
+-- Name: termo; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.termo (
+    pdf text NOT NULL,
+    data date DEFAULT CURRENT_DATE NOT NULL,
+    cpf bigint NOT NULL,
+    filename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.termo OWNER TO exomaadm;
+
+--
+-- Name: termo_assentimento; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.termo_assentimento (
+    cpf bigint NOT NULL,
+    pdf text NOT NULL,
+    filename character varying(100) NOT NULL,
+    data date DEFAULT CURRENT_DATE NOT NULL
+);
+
+
+ALTER TABLE public.termo_assentimento OWNER TO exomaadm;
+
+--
+-- Name: usuario; Type: TABLE; Schema: public; Owner: exomaadm
+--
+
+CREATE TABLE public.usuario (
+    idusu integer NOT NULL,
+    email character varying(200) NOT NULL,
+    senha character varying NOT NULL,
+    nome character varying(200) NOT NULL,
+    ativo integer NOT NULL
+);
+
+
+ALTER TABLE public.usuario OWNER TO exomaadm;
+
+--
+-- Name: usuario_idusu_seq; Type: SEQUENCE; Schema: public; Owner: exomaadm
+--
+
+CREATE SEQUENCE public.usuario_idusu_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuario_idusu_seq OWNER TO exomaadm;
+
+--
+-- Name: usuario_idusu_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: exomaadm
+--
+
+ALTER SEQUENCE public.usuario_idusu_seq OWNED BY public.usuario.idusu;
+
+
+--
+-- Name: acompanhamento_amostra idacompanhamento; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acompanhamento_amostra ALTER COLUMN idacompanhamento SET DEFAULT nextval('public.acompanhamento_amostra_idacompanhamento_seq'::regclass);
+
+
+--
+-- Name: amostra idamo; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra ALTER COLUMN idamo SET DEFAULT nextval('public.amostra_idamo_seq'::regclass);
+
+
+--
+-- Name: diagnostico iddia; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.diagnostico ALTER COLUMN iddia SET DEFAULT nextval('public.diagnostico_iddia_seq'::regclass);
+
+
+--
+-- Name: e_amostra ideam; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_amostra ALTER COLUMN ideam SET DEFAULT nextval('public.e_amostra_ideam_seq'::regclass);
+
+
+--
+-- Name: e_diagnostico ideam; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_diagnostico ALTER COLUMN ideam SET DEFAULT nextval('public.e_diagnostico_ideam_seq'::regclass);
+
+
+--
+-- Name: exame idexa; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.exame ALTER COLUMN idexa SET DEFAULT nextval('public.exame_idexa_seq'::regclass);
+
+
+--
+-- Name: pergunta_dc id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pergunta_dc ALTER COLUMN id SET DEFAULT nextval('public.pergunta_id_seq'::regclass);
+
+
+--
+-- Name: projeto idpro; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.projeto ALTER COLUMN idpro SET DEFAULT nextval('public.projeto_idpro_seq'::regclass);
+
+
+--
+-- Name: usuario idusu; Type: DEFAULT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.usuario ALTER COLUMN idusu SET DEFAULT nextval('public.usuario_idusu_seq'::regclass);
+
+
+--
+-- Data for Name: acompanhamento_amostra; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.acompanhamento_amostra (idacompanhamento, data_saida, status, observacao, idamo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: amostra; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.amostra (etiqueta, idamo, data_coleta, tipo_amostra, lote, validade_coleta, local_coleta, cpf, idpro) FROM stdin;
+\.
+
+
+--
+-- Data for Name: amostra_armazenagem; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.amostra_armazenagem (armazenagem, idamo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: amostra_medicamento; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.amostra_medicamento (medicamento, idamo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: amostra_sintoma; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.amostra_sintoma (sintoma, idamo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: diagnostico; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.diagnostico (data_conclusao, resultado, data_prevista, iddia, idexa, idamo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: e_amostra; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.e_amostra (digitalizado_por, data, ideam, tecnica, idamo, codigo_acesso, codigo_biosample) FROM stdin;
+\.
+
+
+--
+-- Data for Name: e_diagnostico; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.e_diagnostico (data, resultado, probabilidade, ideam, idexa) FROM stdin;
+\.
+
+
+--
+-- Data for Name: exame; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.exame (data_versao, metodo, autor, idexa, nome, versao, finalidade, prazo_conclusao, ambiente) FROM stdin;
+\.
+
+
+--
+-- Data for Name: funcao; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.funcao (idusu, idper) FROM stdin;
+1	1
+1	2
+1	3
+1	4
+1	5
+1	6
+1	7
+1	8
+1	9
+\.
+
+
+--
+-- Data for Name: meta_amostra; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.meta_amostra (atualizado_em, criado_em, criado_por, atualizado_por, idamo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: padroes; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.padroes (faixa, sexo, minimo, maximo, medio, significado, idpad, idexa) FROM stdin;
+\.
+
+
+--
+-- Data for Name: participante; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.participante (nascimento, cpf, nome, logradouro, cidade, estado, sexo, cep, bairro, numero, complemento, tipo, num_prontuario) FROM stdin;
+\.
+
+
+--
+-- Data for Name: participante_contato; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.participante_contato (contato, cpf) FROM stdin;
+\.
+
+
+--
+-- Data for Name: pergunta_dc; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pergunta_dc (id, texto, flag_ativo, tipo) FROM stdin;
+1	Primeira gestação	t	Período gestacional
+2	Idade conceptual materna	t	Período gestacional
+3	Idade conceptual paterna	t	Período gestacional
+4	Prematuridade	t	Período gestacional
+5	Realizou consultas pré-natais	t	Período gestacional
+6	Intercorrências na gestação (hipertensão arterial, diabetes, infecções, descolamento placentário...)	t	Período gestacional
+7	Uso de drogas no período gestacional	t	Período gestacional
+8	Uso de medicação no período gestacional	t	Período gestacional
+9	Consumo de chás	t	Período gestacional
+10	Tentativas de aborto	t	Período gestacional
+11	Consumo de álcool	t	Período gestacional
+12	Tabagismo	t	Período gestacional
+13	Realizou exames de imagem	t	Período gestacional
+14	Realizou exames laboratoriais	t	Período gestacional
+15	Uso de vacinas	t	Período gestacional
+16	Restrição no crescimento intrauterino	t	Período gestacional
+17	Outras informações	t	Período gestacional
+18	Atraso no crescimento	t	Da infância a vida adulta
+19	Baixa estatura	t	Da infância a vida adulta
+20	Alta estatura	t	Da infância a vida adulta
+21	Obesidade/ Crescimento anormal	t	Da infância a vida adulta
+22	Hemi-hipertrofia	t	Da infância a vida adulta
+23	Ganho ponderal	t	Da infância a vida adulta
+24	Regressão neurológica	t	Da infância a vida adulta
+25	Microcefalia	t	Da infância a vida adulta
+26	Hidrocefalia	t	Da infância a vida adulta
+27	Convulsões	t	Da infância a vida adulta
+28	Dores crônicas	t	Da infância a vida adulta
+29	Autismo/Espectro do autismo	t	Da infância a vida adulta
+30	Deficiência intelectual	t	Da infância a vida adulta
+31	Alterações na estrutura do SNC	t	Da infância a vida adulta
+32	Atraso no desenvolvimento da fala e linguagem	t	Da infância a vida adulta
+33	Problemas de audição	t	Da infância a vida adulta
+34	Malformações oculares	t	Da infância a vida adulta
+35	Perda de visão	t	Da infância a vida adulta
+36	Problemas de paladar	t	Da infância a vida adulta
+37	Perda de apetite	t	Da infância a vida adulta
+38	Dificuldade de comer um determinado grupo alimentar	t	Da infância a vida adulta
+39	Problemas olfativos	t	Da infância a vida adulta
+40	Problemas com tato	t	Da infância a vida adulta
+41	Alterações na pele	t	Da infância a vida adulta
+42	Problemas cardíacos congênitos	t	Da infância a vida adulta
+43	Outras alterações cardiovasculares	t	Da infância a vida adulta
+44	Anemias/talassemias	t	Da infância a vida adulta
+45	Alterações renais	t	Da infância a vida adulta
+46	Problemas nos sistema urinário	t	Da infância a vida adulta
+47	Atraso no desenvolvimento motor	t	Da infância a vida adulta
+48	Hipertonia/ Espasticidade	t	Da infância a vida adulta
+49	Hipotonia	t	Da infância a vida adulta
+50	Movimentos anormais	t	Da infância a vida adulta
+51	Ataxia	t	Da infância a vida adulta
+52	Hiperextensibilidade	t	Da infância a vida adulta
+53	Contratura nas articulações	t	Da infância a vida adulta
+54	Alterações esqueléticas	t	Da infância a vida adulta
+55	Escoliose	t	Da infância a vida adulta
+56	Malformação dos membros	t	Da infância a vida adulta
+57	Alterações na genitália	t	Da infância a vida adulta
+58	Problemas de reprodução	t	Da infância a vida adulta
+59	Alterações metabólicas	t	Da infância a vida adulta
+60	Alterações hormonais	t	Da infância a vida adulta
+61	Distúrbios gastrointestinais	t	Da infância a vida adulta
+62	Restrição alimentar	t	Da infância a vida adulta
+63	Hepatopatias	t	Da infância a vida adulta
+64	Problemas respiratórios	t	Da infância a vida adulta
+65	Distúrbios do sistema imunológico	t	Da infância a vida adulta
+66	Alergias	t	Da infância a vida adulta
+67	Organomegalia	t	Da infância a vida adulta
+68	Cânceres/Tumores	t	Da infância a vida adulta
+69	Familiares com os mesmos sintomas (Quais?)	t	Da infância a vida adulta
+70	Uso de medicação contínua	t	Da infância a vida adulta
+71	Outras informações relevantes	t	Da infância a vida adulta
+72	Atraso no crescimento	t	Histórico dos familiares
+73	Baixa estatura	t	Histórico dos familiares
+74	Alta estatura	t	Histórico dos familiares
+75	Obesidade/ Crescimento anormal	t	Histórico dos familiares
+76	Hemi-hipertrofia	t	Histórico dos familiares
+77	Ganho ponderal	t	Histórico dos familiares
+78	Regressão neurológica	t	Histórico dos familiares
+79	Microcefalia	t	Histórico dos familiares
+80	Hidrocefalia	t	Histórico dos familiares
+81	Convulsões	t	Histórico dos familiares
+82	Dores crônicas	t	Histórico dos familiares
+83	Autismo/Espectro do autismo	t	Histórico dos familiares
+84	Deficiência intelectual	t	Histórico dos familiares
+85	Alterações na estrutura do SNC	t	Histórico dos familiares
+86	Atraso no desenvolvimento da fala e linguagem	t	Histórico dos familiares
+87	Problemas de audição	t	Histórico dos familiares
+88	Malformações oculares	t	Histórico dos familiares
+89	Perda de visão	t	Histórico dos familiares
+90	Problemas de paladar	t	Histórico dos familiares
+91	Perda de apetite	t	Histórico dos familiares
+92	Dificuldade de comer um determinado grupo alimentar	t	Histórico dos familiares
+93	Problemas olfativos	t	Histórico dos familiares
+94	Problemas com tato	t	Histórico dos familiares
+95	Alterações na pele	t	Histórico dos familiares
+96	Problemas cardíacos congênitos	t	Histórico dos familiares
+97	Outras alterações cardiovasculares	t	Histórico dos familiares
+98	Anemias/talassemias	t	Histórico dos familiares
+99	Alterações renais	t	Histórico dos familiares
+100	Problemas nos sistema urinário	t	Histórico dos familiares
+101	Atraso no desenvolvimento motor	t	Histórico dos familiares
+102	Hipertonia/ Espasticidade	t	Histórico dos familiares
+103	Hipotonia	t	Histórico dos familiares
+104	Movimentos anormais	t	Histórico dos familiares
+105	Ataxia	t	Histórico dos familiares
+106	Hiperextensibilidade	t	Histórico dos familiares
+107	Contratura nas articulações	t	Histórico dos familiares
+108	Alterações esqueléticas	t	Histórico dos familiares
+109	Escoliose	t	Histórico dos familiares
+110	Malformação dos membros	t	Histórico dos familiares
+111	Alterações na genitália	t	Histórico dos familiares
+112	Problemas de reprodução	t	Histórico dos familiares
+113	Alterações metabólicas	t	Histórico dos familiares
+114	Alterações hormonais	t	Histórico dos familiares
+115	Distúrbios gastrointestinais	t	Histórico dos familiares
+116	Restrição alimentar	t	Histórico dos familiares
+117	Hepatopatias	t	Histórico dos familiares
+118	Problemas respiratórios	t	Histórico dos familiares
+119	Distúrbios do sistema imunológico	t	Histórico dos familiares
+120	Alergias	t	Histórico dos familiares
+121	Organomegalia	t	Histórico dos familiares
+122	Cânceres/Tumores	t	Histórico dos familiares
+123	Outras informações relevantes	t	Histórico dos familiares
+\.
+
+
+--
+-- Data for Name: permissao; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.permissao (idper, descricao) FROM stdin;
+1	participante
+2	amostra
+3	diagnostico
+4	e_amostra
+5	e_diagnostico
+6	exame
+7	projeto
+8	report
+9	usuario
+\.
+
+
+--
+-- Data for Name: projeto; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.projeto (idpro, responsavel, data, titulo, codigo_bioproject) FROM stdin;
+\.
+
+
+--
+-- Data for Name: resposta_dc; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.resposta_dc (participante_cpf, pergunta_id, resposta, descricao, id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: termo; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.termo (pdf, data, cpf, filename) FROM stdin;
+\.
+
+
+--
+-- Data for Name: termo_assentimento; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.termo_assentimento (cpf, pdf, filename, data) FROM stdin;
+\.
+
+
+--
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: exomaadm
+--
+
+COPY public.usuario (idusu, email, senha, nome, ativo) FROM stdin;
+1	admin	gS20nxBY50ziTDwqyVtUsQ==	Administrador	2
+\.
+
+
+--
+-- Name: acompanhamento_amostra_idacompanhamento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.acompanhamento_amostra_idacompanhamento_seq', 8, true);
+
+
+--
+-- Name: amostra_idamo_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.amostra_idamo_seq', 20, true);
+
+
+--
+-- Name: diagnostico_iddia_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.diagnostico_iddia_seq', 1, true);
+
+
+--
+-- Name: e_amostra_ideam_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.e_amostra_ideam_seq', 13, true);
+
+
+--
+-- Name: e_diagnostico_ideam_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.e_diagnostico_ideam_seq', 1, false);
+
+
+--
+-- Name: exame_idexa_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.exame_idexa_seq', 1, true);
+
+
+--
+-- Name: padroes_idpad_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.padroes_idpad_seq', 1, false);
+
+
+--
+-- Name: pergunta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pergunta_id_seq', 123, true);
+
+
+--
+-- Name: permissao_idper_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.permissao_idper_seq', 10, false);
+
+
+--
+-- Name: projeto_idpro_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.projeto_idpro_seq', 9, true);
+
+
+--
+-- Name: resposta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.resposta_id_seq', 123, true);
+
+
+--
+-- Name: usuario_idusu_seq; Type: SEQUENCE SET; Schema: public; Owner: exomaadm
+--
+
+SELECT pg_catalog.setval('public.usuario_idusu_seq', 2, false);
+
+
+--
+-- Name: acompanhamento_amostra acompanhamento_amostra_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acompanhamento_amostra
+    ADD CONSTRAINT acompanhamento_amostra_pkey PRIMARY KEY (idacompanhamento);
+
+
+--
+-- Name: amostra_medicamento amostra_medicamento_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra_medicamento
+    ADD CONSTRAINT amostra_medicamento_pkey PRIMARY KEY (medicamento, idamo);
+
+
+--
+-- Name: amostra amostra_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra
+    ADD CONSTRAINT amostra_pkey PRIMARY KEY (idamo);
+
+
+--
+-- Name: amostra_sintoma amostra_sintoma_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra_sintoma
+    ADD CONSTRAINT amostra_sintoma_pkey PRIMARY KEY (sintoma, idamo);
+
+
+--
+-- Name: diagnostico diagnostico_idexa_idamo_key; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.diagnostico
+    ADD CONSTRAINT diagnostico_idexa_idamo_key UNIQUE (idexa, idamo);
+
+
+--
+-- Name: diagnostico diagnostico_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.diagnostico
+    ADD CONSTRAINT diagnostico_pkey PRIMARY KEY (iddia);
+
+
+--
+-- Name: e_amostra e_amostra_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_amostra
+    ADD CONSTRAINT e_amostra_pkey PRIMARY KEY (ideam);
+
+
+--
+-- Name: e_diagnostico e_diagnostico_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_diagnostico
+    ADD CONSTRAINT e_diagnostico_pkey PRIMARY KEY (ideam, idexa);
+
+
+--
+-- Name: exame exame_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.exame
+    ADD CONSTRAINT exame_pkey PRIMARY KEY (idexa);
+
+
+--
+-- Name: funcao funcao_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.funcao
+    ADD CONSTRAINT funcao_pkey PRIMARY KEY (idusu, idper);
+
+
+--
+-- Name: meta_amostra meta_amostra_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.meta_amostra
+    ADD CONSTRAINT meta_amostra_pkey PRIMARY KEY (idamo);
+
+
+--
+-- Name: padroes padroes_faixa_key; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.padroes
+    ADD CONSTRAINT padroes_faixa_key UNIQUE (faixa);
+
+
+--
+-- Name: padroes padroes_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.padroes
+    ADD CONSTRAINT padroes_pkey PRIMARY KEY (idpad);
+
+
+--
+-- Name: padroes padroes_sexo_key; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.padroes
+    ADD CONSTRAINT padroes_sexo_key UNIQUE (sexo);
+
+
+--
+-- Name: participante_contato participante_contato_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.participante_contato
+    ADD CONSTRAINT participante_contato_pkey PRIMARY KEY (contato);
+
+
+--
+-- Name: participante participante_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.participante
+    ADD CONSTRAINT participante_pkey PRIMARY KEY (cpf);
+
+
+--
+-- Name: pergunta_dc pergunta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pergunta_dc
+    ADD CONSTRAINT pergunta_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: permissao permissao_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.permissao
+    ADD CONSTRAINT permissao_pkey PRIMARY KEY (idper);
+
+
+--
+-- Name: projeto projeto_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.projeto
+    ADD CONSTRAINT projeto_pkey PRIMARY KEY (idpro);
+
+
+--
+-- Name: resposta_dc resposta_dc_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.resposta_dc
+    ADD CONSTRAINT resposta_dc_pk PRIMARY KEY (id);
+
+
+--
+-- Name: termo_assentimento termo_assentimento_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.termo_assentimento
+    ADD CONSTRAINT termo_assentimento_pkey PRIMARY KEY (cpf);
+
+
+--
+-- Name: termo termo_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.termo
+    ADD CONSTRAINT termo_pkey PRIMARY KEY (cpf);
+
+
+--
+-- Name: usuario usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (idusu);
+
+
+--
+-- Name: amostra_armazenagem amostra_armazenagem_idamo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra_armazenagem
+    ADD CONSTRAINT amostra_armazenagem_idamo_fkey FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: amostra amostra_cpf_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra
+    ADD CONSTRAINT amostra_cpf_fkey FOREIGN KEY (cpf) REFERENCES public.participante(cpf) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: amostra amostra_idpro_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra
+    ADD CONSTRAINT amostra_idpro_fkey FOREIGN KEY (idpro) REFERENCES public.projeto(idpro);
+
+
+--
+-- Name: amostra_medicamento amostra_medicamento_idamo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra_medicamento
+    ADD CONSTRAINT amostra_medicamento_idamo_fkey FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: amostra_sintoma amostra_sintoma_idamo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.amostra_sintoma
+    ADD CONSTRAINT amostra_sintoma_idamo_fkey FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: diagnostico diagnostico_idamo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.diagnostico
+    ADD CONSTRAINT diagnostico_idamo_fkey FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: diagnostico diagnostico_idexa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.diagnostico
+    ADD CONSTRAINT diagnostico_idexa_fkey FOREIGN KEY (idexa) REFERENCES public.exame(idexa);
+
+
+--
+-- Name: e_amostra e_amostra_idamo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_amostra
+    ADD CONSTRAINT e_amostra_idamo_fkey FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: e_diagnostico e_diagnostico_ideam_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_diagnostico
+    ADD CONSTRAINT e_diagnostico_ideam_fkey FOREIGN KEY (ideam) REFERENCES public.e_amostra(ideam) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: e_diagnostico e_diagnostico_idexa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.e_diagnostico
+    ADD CONSTRAINT e_diagnostico_idexa_fkey FOREIGN KEY (idexa) REFERENCES public.exame(idexa);
+
+
+--
+-- Name: acompanhamento_amostra fk_idamo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.acompanhamento_amostra
+    ADD CONSTRAINT fk_idamo FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: funcao funcao_idper_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.funcao
+    ADD CONSTRAINT funcao_idper_fkey FOREIGN KEY (idper) REFERENCES public.permissao(idper);
+
+
+--
+-- Name: funcao funcao_idusu_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.funcao
+    ADD CONSTRAINT funcao_idusu_fkey FOREIGN KEY (idusu) REFERENCES public.usuario(idusu) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: meta_amostra meta_amostra_idamo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.meta_amostra
+    ADD CONSTRAINT meta_amostra_idamo_fkey FOREIGN KEY (idamo) REFERENCES public.amostra(idamo) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: padroes padroes_idexa_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.padroes
+    ADD CONSTRAINT padroes_idexa_fkey FOREIGN KEY (idexa) REFERENCES public.exame(idexa);
+
+
+--
+-- Name: participante_contato participante_contato_cpf_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.participante_contato
+    ADD CONSTRAINT participante_contato_cpf_fkey FOREIGN KEY (cpf) REFERENCES public.participante(cpf) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: resposta_dc resposta_participante_cpf_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.resposta_dc
+    ADD CONSTRAINT resposta_participante_cpf_fkey FOREIGN KEY (participante_cpf) REFERENCES public.participante(cpf);
+
+
+--
+-- Name: resposta_dc resposta_pergunta_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.resposta_dc
+    ADD CONSTRAINT resposta_pergunta_id_fkey FOREIGN KEY (pergunta_id) REFERENCES public.pergunta_dc(id);
+
+
+--
+-- Name: termo_assentimento termo_assentimento_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.termo_assentimento
+    ADD CONSTRAINT termo_assentimento_fkey FOREIGN KEY (cpf) REFERENCES public.participante(cpf) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: termo termo_cpf_fkey; Type: FK CONSTRAINT; Schema: public; Owner: exomaadm
+--
+
+ALTER TABLE ONLY public.termo
+    ADD CONSTRAINT termo_cpf_fkey FOREIGN KEY (cpf) REFERENCES public.participante(cpf) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON SCHEMA public TO exomaadm;
+
+
+--
+-- Name: TABLE acompanhamento_amostra; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE public.acompanhamento_amostra FROM postgres;
+GRANT ALL ON TABLE public.acompanhamento_amostra TO exomaadm;
+
+
+--
+-- Name: SEQUENCE acompanhamento_amostra_idacompanhamento_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE public.acompanhamento_amostra_idacompanhamento_seq FROM postgres;
+GRANT SELECT,USAGE ON SEQUENCE public.acompanhamento_amostra_idacompanhamento_seq TO exomaadm;
+
+
+--
+-- Name: TABLE pergunta_dc; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE public.pergunta_dc TO exomaadm;
+
+
+--
+-- Name: SEQUENCE pergunta_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,USAGE ON SEQUENCE public.pergunta_id_seq TO exomaadm;
+
+
+--
+-- Name: SEQUENCE resposta_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,USAGE ON SEQUENCE public.resposta_id_seq TO exomaadm;
+
+
+--
+-- Name: TABLE resposta_dc; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE public.resposta_dc TO exomaadm;
+
+
+--
+-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: public; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT SELECT,USAGE ON SEQUENCES  TO exomaadm;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

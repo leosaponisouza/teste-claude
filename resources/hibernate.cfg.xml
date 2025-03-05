@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "https://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/exoma</property>
+		<property name="hibernate.connection.username">exomaadm</property>
+		<property name="hibernate.connection.password">po8AhghaiThi</property>
+		<property name="hibernate.archive.autodetection">class,hbm</property>
+		<property name="show_sql">true</property>
+		<mapping resource="participante.hbm.xml"/>
+		<mapping resource="Termo.hbm.xml"/>
+		<mapping resource="Termo_assentimento.hbm.xml"/>
+		<mapping resource="participante_contato.hbm.xml"/>
+		<mapping resource="Acompanhamento_amostra.hbm.xml"/>
+		<mapping resource="Amostra.hbm.xml"/>
+		<mapping resource="Amostra_sintoma.hbm.xml"/>
+		<mapping resource="E_amostra.hbm.xml"/>
+		<mapping resource="Amostra_medicamento.hbm.xml"/>
+		<mapping resource="Amostra_armazenagem.hbm.xml"/>
+		<mapping resource="Projeto.hbm.xml"/>
+		<mapping resource="Diagnostico.hbm.xml"/>
+		<mapping resource="Exame.hbm.xml"/>
+		<mapping resource="Usuario.hbm.xml"/>		
+		<mapping resource="Permissao.hbm.xml"/>
+		<mapping resource="E_diagnostico.hbm.xml"/>
+		<mapping resource="RespostaDc.hbm.xml"/>
+		<mapping resource="PerguntaDc.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

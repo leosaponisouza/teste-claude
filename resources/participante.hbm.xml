@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.participante" table="participante" catalog="public" optimistic-lock="version">
+        <id name="cpf" type="java.lang.Long">
+            <column name="cpf" />
+            <generator class="assigned" />
+        </id>
+        <property name="numProntuario" type="string">
+            <column name="num_prontuario" />
+        </property>
+        <property name="nascimento" type="date">
+            <column name="nascimento" />
+        </property>
+        <property name="nome" type="string">
+            <column name="nome" />
+        </property>
+        <property name="logradouro" type="string">
+            <column name="logradouro" />
+        </property>
+        <property name="cidade" type="string">
+            <column name="cidade" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" />
+        </property>
+        <property name="sexo" type="character">
+            <column name="sexo" />
+        </property>
+        <property name="cep" type="integer">
+            <column name="cep" />
+        </property>
+        <property name="bairro" type="string">
+            <column name="bairro" />
+        </property>
+        <property name="numero" type="integer">
+            <column name="numero" />
+        </property>
+        <property name="complemento" type="string">
+            <column name="complemento" />
+        </property>
+        <property name="tipo" type="integer">
+            <column name="tipo" />
+        </property>
+
+        <set name="respostas" inverse="true" cascade="all-delete-orphan">
+            <key>
+                <column name="participante_cpf" not-null="true"/>
+            </key>
+            <one-to-many class="com.exoma.model.RespostaDc"/>
+        </set>
+    </class>
+</hibernate-mapping>

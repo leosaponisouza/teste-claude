@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"  xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />    
+    <title>exoma</title>
+    <style type="text/css">
+    	.btnPos {
+    		margin: 12px;
+    	}
+    	.marginLeft12 {
+    		margin-left: 12px;
+    	}
+    	.successText {
+    		padding-left: 22px;
+    		font-weight: bold;
+    		color: green;
+    	}
+    	.participante-table {
+			border-collapse: collapse;
+		}
+		.participante-table-header {
+			text-align: center;
+			background: none repeat scroll 0 0 #E5E5E5;
+			border-bottom: 1px solid #BBBBBB;
+			padding: 2px;
+		}
+		.participante-table-row {
+			padding: 12px;
+    		text-align: center;
+		}
+    </style>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" /> 
+</h:head>
+<h:body>
+    <h2>exoma Crud Example</h2>
+    <!-- New participante Form -->
+    <h3 class="marginLeft12">1. New participante Form</h3>
+    <h:form id="addparticipanteRecord" styleClass="form-horizontal">    	
+        <h:panelGrid id="display" columns="2" cellpadding="5">        	
+        	<div class="form-group">
+        	    <h:outputLabel value="CPF:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+            		<h:inputText value="#{participante.cpf}" styleClass="form-control" />
+            	</div> 
+            </div>
+            
+			<div class="form-group">
+				<h:outputLabel value="Digite/selecione Nascimento:"  styleClass="control-label"/>
+				<div class="col-xs-10" >
+				    <p:datePicker value="#{participante.nascimento}" pattern="yyyy-MM-dd" mask="true"
+								  converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030" />
+        	    </div>		
+ 			</div>
+    
+            <div class="form-group">
+            	<h:outputLabel value="Nome:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.nome}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Logradouro:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.logradouro}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Cidade:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+            		<h:inputText value="#{participante.cidade}" styleClass="form-control" />
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Estado:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.estado}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Sexo:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.sexo}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="CEP:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.cep}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Bairro:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.bairro}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Número:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.numero}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Complemento:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.complemento}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Tipo:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText value="#{participante.tipo}" styleClass="form-control" />
+            	</div> 
+            </div>
+            <div class="form-group">
+        		<div class="col-xs-offset-2 col-xs-10">
+            		<h:commandButton value="Save Record" action="#{participante.saveparticipanteRecord}" styleClass="btn btn-primary btn-sm btnPos" />
+        			<h:outputLabel id="addparticipanteRecordmessage" />
+    	   			<h:message for="addparticipanteRecordmessage" styleClass="successText"/>
+            		
+            	</div>
+            </div>
+        </h:panelGrid>
+    </h:form>
+    <br /><br />
+    
+    <!-- Form In Order To Delete A Particular participante -->
+    <h3  class="marginLeft12">2. Delete participante Record</h3>
+    <h:form id="deleteparticipanteRecord" styleClass="form-horizontal">
+        <h:panelGrid columns="2">
+        	<div class="form-group">
+            	<h:outputLabel value="CPF:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+            		<h:inputText value="#{participante.cpf}" styleClass="form-control" />
+            	</div> 
+            </div>
+           <div class="form-group">
+        		<div class="col-xs-offset-2 col-xs-10">
+            		<h:commandButton value="Delete participante Record" action="#{participante.deleteparticipanteRecord}" styleClass="btn btn-primary btn-sm btnPos" />
+            	</div>
+            </div>
+        </h:panelGrid>
+        <h:outputLabel id="deleteparticipanteRecordmessage"  />
+        <h:message for="deleteparticipanteRecordmessage" styleClass="successText" />
+    </h:form>
+    <br /><br />
+
+	<!-- Form In Order To Show A Particular participante Details -->
+	<h3  class="marginLeft12">3. Find participante Record</h3>
+    <h:form id="recoverparticipanteRecord">
+        <h:panelGrid columns="2">
+        	<div class="form-group">
+            	<h:outputLabel value="CPF:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+            		<h:inputText value="#{participante.cpf}" styleClass="form-control" />
+            	</div> 
+            </div>
+            <div class="form-group">
+        		<div class="col-xs-offset-2 col-xs-10">
+            		<h:commandButton value="Show participante" action="#{participante.searchAnparticipanteSet()}" styleClass="btn btn-primary btn-sm btnPos" />
+            	</div>
+            </div>
+           <h:dataTable id="findparticipanteRecordDetails" rendered="#{not empty findparticipanteById}" value="#{participante.getparticipanteSet()}" var="cpflikeset" styleClass="participante-table" headerClass="participante-table-header">
+           		<h:column>    				
+      				<f:facet name = "header">CPF</f:facet><h:outputText value="#{cpflikeset.cpf}" styleClass="participante-table-row" />	      			
+   				</h:column>
+           		<h:column>    				
+      				<f:facet name = "header">Nome</f:facet><h:outputText value="#{cpflikeset.nome}" styleClass="participante-table-row" />	      			
+   				</h:column>
+   				<h:column>
+      				<f:facet name = "header">Cidade</f:facet><h:outputText value="#{cpflikeset.cidade}" styleClass="participante-table-row" />	      			
+   				</h:column>
+           </h:dataTable>            	                         
+        </h:panelGrid>
+        <h:outputLabel id="recoverparticipanteRecordmessage"  />
+        <h:message for="recoverparticipanteRecordmessage" styleClass="successText" />
+    </h:form>
+    <br /><br />
+
+	<!-- Form For Updating Existing participante Details -->
+	<h3  class="marginLeft12">4. Update participante Details</h3>
+    <h:form id="updateparticipanteRecord" display= "grid">
+        <h:panelGrid columns="2">
+
+            <div class="form-group">
+               	<h:outputLabel value="Selecione CPF:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+			        <h:selectOneMenu id="selectparticipante" value="#{participante.cpf}" styleClass="btn btn-primary btn-sm btnPos">
+			            <f:selectItem itemValue="" itemLabel="---" />
+			            <f:selectItems value="#{participante.getAllparticipanteAsList()}" var="all"
+									   itemValue="#{all.cpf}" itemLabel="#{all.cpf}" />
+			            <f:ajax listener="#{participante.searchOneparticipante()}" render="Update_cpf Update_nascimento Update_nome 
+			            Update_logradouro Update_cidade Update_estado Update_sexo Update_cep Update_bairro 
+			            Update_numero Update_complemento Update_tipo" />
+			        </h:selectOneMenu>
+            	</div>
+            </div>
+
+            <div class="form-group">
+               	<h:outputLabel value="... ou senão, digite CPF:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+            		<h:inputText id="Update_cpf" value="#{participante.cpf}" styleClass="form-control" />
+            	</div>
+            </div>
+
+          
+             <div class="form-group">
+        		<div class="col-xs-offset-2 col-xs-10">
+            		<h:commandButton value="Show participante" action="#{participante.searchOneparticipante}" styleClass="btn btn-primary btn-sm btnPos" />
+            	</div>
+            </div>   
+			<div class="form-group">
+				<h:outputLabel value="Digite/selecione Nascimento:"  styleClass="control-label"/>
+				<div class="col-xs-10" >
+				    <p:datePicker id="Update_nascimento" value="#{participante.nascimento}" pattern="yyyy-MM-dd" mask="true"
+								  converter="dateconverter" monthNavigator="true" yearNavigator="true" yearRange="1925:2030"  />
+        	    </div>		
+ 			</div>
+            <div class="form-group">
+            	<h:outputLabel value="Nome:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_nome" value="#{participante.nome}" styleClass="form-control" />
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Logradouro:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_logradouro" value="#{participante.logradouro}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Cidade:" styleClass="control-label" />
+            	<div class="col-xs-10">	
+            		<h:inputText id="Update_cidade" value="#{participante.cidade}" styleClass="form-control" />
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Estado:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_estado" value="#{participante.estado}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Sexo:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_sexo" value="#{participante.sexo}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="CEP:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_cep" value="#{participante.cep}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Bairro:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_bairro" value="#{participante.bairro}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Número:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_numero" value="#{participante.numero}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Complemento:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_complemento" value="#{participante.complemento}" styleClass="form-control" /> 
+            	</div> 
+            </div>
+            <div class="form-group">
+            	<h:outputLabel value="Tipo:" styleClass="control-label" />
+            	<div class="col-xs-10">
+            		<h:inputText id="Update_tipo" value="#{participante.tipo}" styleClass="form-control" />
+            	</div>
+            </div> 
+            <div class="form-group">
+               <div class="col-xs-offset-2 col-xs-10">
+        			<h:commandButton id="update" value="Update Record" action="#{participante.updateparticipanteDetails}" styleClass="btn btn-primary btn-sm btnPos" />
+        			<h:outputLabel id="updateparticipanteRecordmessage" />
+    	   			<h:message for="updateparticipanteRecordmessage" styleClass="successText" />
+        	   </div>
+        	</div>        
+       </h:panelGrid>
+    </h:form>
+</h:body>
+</html>

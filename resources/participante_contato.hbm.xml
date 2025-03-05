@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.participante_contato" table="participante_contato" catalog="public" optimistic-lock="version">
+        <id name="contato" type="string">
+            <column name="contato" />
+            <generator class="assigned" />
+        </id>
+        <property name="cpf" type="java.lang.Long">
+            <column name="cpf" />
+        </property>
+    </class>
+</hibernate-mapping>

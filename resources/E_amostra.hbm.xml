@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.E_amostra" table="e_amostra" catalog="public" optimistic-lock="version">
+        <id name="ideam" type="integer">
+            <column name="ideam" />
+            <generator class="assigned" />
+        </id>
+        <property name="digitalizado_por" type="string">
+            <column name="digitalizado_por" />
+        </property>
+        <property name="data" type="date">
+            <column name="data" />
+        </property>
+        <property name="tecnica" type="string">
+            <column name="tecnica" />
+        </property>
+        <property name="codigo_acesso" type="string">
+            <column name="codigo_acesso" />
+        </property>
+        <property name="codigo_biosample" type="string">
+            <column name="codigo_biosample" />
+        </property>
+        <property name="idamo" type="integer">
+            <column name="idamo" />
+        </property>
+    </class>
+</hibernate-mapping>

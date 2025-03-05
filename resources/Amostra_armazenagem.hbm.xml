@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.Amostra_armazenagem" table="amostra_armazenagem" catalog="public" optimistic-lock="version">
+	    <composite-id>
+	        <key-property name="idamo" column="idamo" type="integer" /> 
+	        <key-property name="armazenagem" column="armazenagem" type="string" /> 
+	    </composite-id>
+    </class>
+</hibernate-mapping>

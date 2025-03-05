@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.Acompanhamento_amostra" table="acompanhamento_amostra" catalog="public" optimistic-lock="version">
+        <id name="idacompanhamento" type="integer">
+            <column name="idacompanhamento" />
+            <generator class="assigned" />
+        </id>
+        <property name="data_saida" type="date">
+            <column name="data_saida" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" />
+        </property>
+        <property name="observacao" type="string">
+            <column name="observacao" />
+        </property>
+        <property name="idamo" type="integer">
+            <column name="idamo" />
+        </property>
+    </class>
+</hibernate-mapping>

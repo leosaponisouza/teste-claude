@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.Projeto" table="projeto" catalog="public" optimistic-lock="version">
+        <id name="idpro" type="integer">
+            <column name="idpro" />
+            <generator class="assigned" />
+        </id>
+        <property name="data" type="date">
+            <column name="data" />
+        </property>
+        <property name="responsavel" type="string">
+            <column name="responsavel" />
+        </property>
+        <property name="titulo" type="string">
+            <column name="titulo" />
+        </property>
+        <property name="codigo_bioproject" type="string">
+            <column name="codigo_bioproject" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.exoma.model.RespostaDc" table="resposta_dc">
+        <!-- ID -->
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+
+        <!-- Many-to-One: participante -->
+        <many-to-one name="participante" class="com.exoma.pojo.participante" fetch="join">
+            <column name="participante_cpf" not-null="true"/>
+        </many-to-one>
+
+        <!-- Many-to-One: pergunta -->
+        <many-to-one name="pergunta" class="com.exoma.model.PerguntaDc" fetch="join">
+            <column name="pergunta_id" not-null="true"/>
+        </many-to-one>
+
+        <!-- resposta -->
+        <property name="resposta" column="resposta" type="string"/>
+
+        <!-- descricao (LOB) -->
+        <property name="descricao" column="descricao" type="text"/>
+
+    </class>
+</hibernate-mapping>

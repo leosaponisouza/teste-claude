@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.Exame" table="exame" catalog="public" optimistic-lock="version">
+            <id name="idexa" type="integer">
+            <column name="idexa" />
+            <generator class="assigned" />
+        </id>
+        <property name="data_versao" type="date">
+            <column name="data_versao" />
+        </property>
+        <property name="metodo" type="string">
+            <column name="metodo" />
+        </property>
+        <property name="autor" type="string">
+            <column name="autor" />
+        </property>
+        <property name="nome" type="string">
+            <column name="nome" />
+        </property>
+        <property name="versao" type="string">
+            <column name="versao" />
+        </property>
+        <property name="finalidade" type="string">
+            <column name="finalidade" />
+        </property>
+        <property name="prazo_conclusao" type="integer">
+            <column name="prazo_conclusao" />
+        </property>
+        <property name="ambiente" type="integer">
+            <column name="ambiente" />
+        </property>
+    </class>
+</hibernate-mapping>

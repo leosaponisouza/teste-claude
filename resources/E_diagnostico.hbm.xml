@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.exoma.pojo.E_diagnostico" table="e_diagnostico" catalog="public" optimistic-lock="version">
+	    <composite-id>
+	        <key-property name="ideam" column="ideam" type="integer" /> 
+	        <key-property name="idexa" column="idexa" type="integer" /> 
+	    </composite-id>
+        <property name="data" type="date">
+            <column name="data" />
+        </property>
+        <property name="resultado" type="string">
+            <column name="resultado" />
+        </property>
+        <property name="probabilidade" type="double">
+            <column name="probabilidade" />
+        </property>
+    </class>
+</hibernate-mapping>
